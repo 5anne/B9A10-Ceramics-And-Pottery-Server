@@ -40,6 +40,19 @@ async function run() {
             res.send(result);
         })
 
+        app.get('/newItems', async (req, res) => {
+            const cursor = newItemCollection.find();
+            const result = await cursor.toArray();
+            res.send(result);
+        })
+
+        app.get('/newItems/:id', async (req, res) => {
+            const id = req.params.id;
+            const query = { _id: new ObjectId(id) };
+            const result = await newItemCollection.findOne(query);
+            res.send(result);
+        })
+
         app.post('/newItems', async (req, res) => {
             const newItems = req.body;
             console.log(newItems);
