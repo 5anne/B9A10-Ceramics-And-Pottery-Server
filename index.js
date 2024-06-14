@@ -67,18 +67,25 @@ async function run() {
             const updatedItems = req.body;
             const items = {
                 $set: {
-                    image: updatedCoffee.image,
-                    item_name: updatedCoffee.item_name,
-                    subcategory_name: updatedCoffee.subcategory_name,
-                    short_description: updatedCoffee.short_description,
-                    price: updatedCoffee.price,
-                    rating: updatedCoffee.rating,
-                    customization: updatedCoffee.customization,
-                    processing_time: updatedCoffee.processing_time,
-                    stock_status: updatedCoffee.stock_status
+                    image: updatedItems.image,
+                    item_name: updatedItems.item_name,
+                    subcategory_name: updatedItems.subcategory_name,
+                    short_description: updatedItems.short_description,
+                    price: updatedItems.price,
+                    rating: updatedItems.rating,
+                    customization: updatedItems.customization,
+                    processing_time: updatedItems.processing_time,
+                    stock_status: updatedItems.stock_status
                 }
             }
             const result = await newItemCollection.updateOne(filter, items, options);
+            res.send(result);
+        })
+
+        app.delete('/newItems/:id', async (req, res) => {
+            const id = req.params.id;
+            const query = { _id: new ObjectId(id) };
+            const result = await newItemCollection.deleteOne(query);
             res.send(result);
         })
 
